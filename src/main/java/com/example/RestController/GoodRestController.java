@@ -44,7 +44,7 @@ public class GoodRestController {
 			@PathVariable String date, @PathVariable int num_of_goods) {
 		Map<String, Object> res = new HashMap<>();
 		if (isValidDate(date)) {
-			DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			Date startDate = null;
 			try {
 				startDate = df.parse(date);
