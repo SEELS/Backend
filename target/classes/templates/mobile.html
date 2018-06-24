@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<script src="/angular/angular.min.js"></script>
+
+
+	<script src="/mobileJavaS.js"></script>
+
+<title>Prototype on Mobile</title>
+</head>
+
+<body>
+	<div ng-app="mobile" class="container">
+
+		<div ng-controller="MobileController">
+			
+
+			<p id="demo">Click the button to get your position.</p>
+			<p>{{boolean}}</p>
+			<button ng-click="getLocation()">Try It</button>
+
+			<div id="mapholder"></div>
+			 
+		</div>
+	</div>
+	
+	 
+</body>
+</html>

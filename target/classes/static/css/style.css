@@ -1,0 +1,46 @@
+*
+{
+	margin:0px;
+	padding: 0px;
+}
+#map 
+{
+	height: 100%;
+	width: 70%;
+	float: left;
+}
+
+html, body 
+{
+	height: 100%;
+    margin: 0;
+    padding: 0;
+}
+    
+aside, h3
+{
+	height:40%;
+	width: 30%;
+	display: inline;
+	margin:10px;
+}
+
+.truckId
+{
+	margin-left: 15px;
+}
+
+.header
+{
+	display: none;
+}
+
+#activeTrucks
+{
+	height: 40%;
+}
+
+#truckDetails
+{
+	height: 50%;
+}
