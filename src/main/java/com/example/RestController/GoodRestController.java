@@ -298,7 +298,7 @@ public class GoodRestController {
 		{
 			if (isValidDate(date)) 
 			{
-				DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+				DateFormat df = new SimpleDateFormat("YYYY-MM-dd");
 				Date startDate = null;
 				try {
 					startDate = df.parse(date);
