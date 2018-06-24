@@ -146,16 +146,16 @@ public class TruckRestController {
 	
 	//modified by Mariam
 	/* it gets the actual current location of truck to draw a marker on the map */
-	@RequestMapping(value = "/viewCurrentTruckLocation/{driver_id}", method = RequestMethod.GET)
-	public Map<String, Object> vewCurrentTruckLocation(@PathVariable long driver_id) {
+	@RequestMapping(value = "/viewCurrentTruckLocation/{truck_id}", method = RequestMethod.GET)
+	public Map<String, Object> vewCurrentTruckLocation(@PathVariable String truck_id) {
 		Map<String, Object> res = new HashMap<>();
-		Driver driver = driverRepository.findOne(driver_id);
-		if (driver != null)
+		Truck truck = truckRepository.findOne(truck_id);
+		if (truck != null)
 		{
 			//res.put("Error","there's no truck with that Id");
-			if(locationRepository.findFirstByDriverOrderByIdDesc(driver)!=null)
+			if(locationRepository.findFirstByTruckOrderByIdDesc(truck)!=null)
 			{
-				res.put("Success", locationRepository.findFirstByDriverOrderByIdDesc(driver));
+				res.put("Success", locationRepository.findFirstByTruckOrderByIdDesc(truck));
 			}
 			else
 			{
@@ -469,6 +469,24 @@ public class TruckRestController {
 		return res;
 	}
 
+	@RequestMapping(value = "/getTripTruck/{trip_id}", method = RequestMethod.GET)
+	public Map<String, Object> getTripTruck(@PathVariable long tripId) {
+		Map<String, Object> res = new HashMap<>();
+		Trip trip = tripRepository.findOne(tripId);
+		if (trip == null) {
+			res.put("Error", "There's no Trip with this Id");
+		} else {
+			if(trip.getTruck()!=null)
+			{
+				res.put("Success", trip.getTruck().getId() );
+			}
+			else
+				res.put("Error", "There is no trip for this truck");
+			
+		}
+
+		return res;
+	}
 	@RequestMapping(value = "/getTruck/{truck_id}", method = RequestMethod.GET)
 	public Map<String, Object> getTruck(@PathVariable String truck_id) {
 		Map<String, Object> res = new HashMap<>();
