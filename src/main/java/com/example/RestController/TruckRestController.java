@@ -545,6 +545,7 @@ public class TruckRestController {
 		else 
 		{
 			Truck truck = truckRepository.findOne(truck_id);
+			truck.setDeleted(true);
 			if (truckRepository.save(truck) != null)
 					res.put("Success", "Truck is Deleted");
 			else
