@@ -63,73 +63,110 @@ public class TripRestController {
 	//Modified by Mariam 
 	//Modified By Sameh
 	
-	@RequestMapping(value = "/saveTrip/{truck_id}/{driver_id}/{parent_id}/{road_id}/{date}", method = RequestMethod.GET)
+	@RequestMapping(value = "/saveTrip/{truck_id}/{driver_id}/{parent_id}/{road_id}/{date}/{good}", method = RequestMethod.GET)
 	public Map<String, String> saveTrip(@PathVariable String truck_id, @PathVariable String date,
-			@PathVariable long driver_id, @PathVariable long parent_id, @PathVariable long road_id, @RequestParam("barcode") ArrayList<String> barcode
-			,@RequestParam("num_of_good") ArrayList<Integer> num_of_good) {
+			@PathVariable long driver_id, @PathVariable long parent_id, @PathVariable long road_id,@PathVariable String good) {
 		Map<String, String> res = new HashMap<>();
-		Truck truck = truckRepository.findOne(truck_id);
-		Road road = roadRepository.findOne(road_id);
-		if (truck == null) {
-			res.put("Error", "there's No Truck with that Id");
-		} else {
-			if (road == null) {
-				res.put("Error", "there's No Road with that Id");
-			} else {
-				ArrayList<Location> roadLocations=locationRepository.findByDeletedAndRoadOrderByTimeDesc(false,road);
-				Driver driver = driverRepository.findOne(driver_id);
-				if (driver != null) {
-					Date date_ = getDate(date);
-					Trip trip = new Trip();
-					trip.setRate(5.0);
-					trip.setDate(date_);
-					trip.setDriver(driver);
-					trip.setDestination(roadLocations.get(1));
-					trip.setSource(roadLocations.get(0));
-					trip.setParent(parent_id);
-					trip.setTruck(truck);
-					trip.setRoad(road);
-					trip.setState(1);
-					if (tripRepository.save(trip) != null) {
-						TripGood tripGood=new TripGood();
-						tripGood.setTrip(trip);
-						for(int i=0;i<barcode.size();i++)
-						{
-							if(goodRepository.findOne(barcode.get(i))!=null)
-						    {
-						    	Good good=goodRepository.findOne(barcode.get(i));
-						    	tripGood.setGood(good);
-						    	tripGood.setNum_of_goods(num_of_good.get(i));
-						    	tripGood.setScan_in_num_of_goods(0);
-						    	tripGood.setScan_out_num_of_goods(0);
-						    	tripGood.setState(0);
-						    	if (tripGoodRepository.save(tripGood) != null) {
-						    		res.put("Success", "Trip is added");
-						    	}
-						    	else
-						    	{
-						    		res.put("Error", "Trip not save Database Error");
-						    	}
-						    }
-						    else
-						    {
-						    	res.put("Error", "Good is not existed");
-						    }
-						}
-					    
-						
-					} else
-						res.put("Error", "Trip not save Database Error");
-					
-				} else {
-					res.put("Error", "Driver Not found");
+		int flag=0;
+		if(truckRepository.findOne(truck_id)!=null)
+		{
+			Truck truck = truckRepository.findOne(truck_id);
+			Road road = roadRepository.findOne(road_id);
+			if (truck == null) {
+				res.put("Error", "there's No Truck with that Id");
+			} 
+			else 
+			{
+				if (road == null) 
+				{
+					res.put("Error", "there's No Road with that Id");
 				}
-
+				else
+				{
+					ArrayList<Location> roadLocations=locationRepository.findByDeletedAndRoadOrderByTimeDesc(false,road);
+					if(roadLocations.size()>=2)
+					{
+						if(driverRepository.findOne(driver_id)!=null)
+						{
+							Driver driver = driverRepository.findOne(driver_id);
+							Date date_ = getDate(date);
+							Trip trip = new Trip();
+							trip.setRate(5.0);
+							trip.setDate(date_);
+							trip.setDriver(driver);
+							trip.setDestination(roadLocations.get(1));
+							trip.setSource(roadLocations.get(0));
+							trip.setParent(parent_id);
+							trip.setTruck(truck);
+							trip.setRoad(road);
+							trip.setState(1);
+							if (tripRepository.save(trip) != null) 
+							{
+								String[] barcode=good.split(",");
+								for(int i=0;i<barcode.length;i++)
+								{
+									String[] CountsWithGoods=barcode[i].split(":");
+									if(goodRepository.findOne(CountsWithGoods[0])!=null)
+									{
+										TripGood tripGood=new TripGood();
+										tripGood.setTrip(trip);
+								    	Good g=goodRepository.findOne(CountsWithGoods[0]);
+								    	tripGood.setGood(g);
+								    	tripGood.setNum_of_goods(Integer.parseInt(CountsWithGoods[1]));
+								    	tripGood.setScan_in_num_of_goods(0);
+								    	tripGood.setScan_out_num_of_goods(0);
+								    	tripGood.setState(0);
+								    	if (tripGoodRepository.save(tripGood) == null) {
+								    		flag=1;
+								    		break;
+								    	}
+									 }
+									else
+									{
+										flag=2;
+										break;
+									}
+								}
+								if(flag==1)
+								{
+						    		res.put("Error", "Connection Error");
+								}
+								else if(flag==0)
+								{
+						    		res.put("Success", "Trip is added");
+								}
+								else
+								{
+						    		res.put("Error", "There is no good with this barcode");
+								}
+								System.out.println(barcode.length);    
+							}
+							else 
+							{
+								res.put("Error", "Connection Error");
+							}
+						}
+						else
+						{
+							res.put("Error", "Driver is Not found");
+						}
+					}
+					else
+					{
+						res.put("Error", "There is no locations for this road");
+					}
+				}
 			}
+			
 		}
-
+		else
+		{
+			res.put("Error","There is no truck with this id");
+		}
+		
 		return res;
 	}
+					
 	@RequestMapping(value = "/returnTrip/{trip_id}", method = RequestMethod.GET)
 	public Map<String,Object> saveTripRoad(@PathVariable long trip_id) {
 		Map<String, Object> res = new HashMap<>();
