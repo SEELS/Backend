@@ -204,7 +204,17 @@ public class GoodRestController {
 				{
 					trips.add(tripGoods.get(i).getTrip());
 				}
-				res.put("Success", trips);
+				//Edited by amina
+				ArrayList<Trip> activeTrips = new ArrayList<Trip>();
+
+				for (int i=0;i<trips.size();i++)
+				{
+					if (trips.get(i).getTruck().getActive())
+					{
+						activeTrips.add(trips.get(i));
+					}
+				}
+				res.put("Success", activeTrips);
 			}
 			else
 			{
