@@ -470,9 +470,9 @@ public class TruckRestController {
 	}
 
 	@RequestMapping(value = "/getTripTruck/{trip_id}", method = RequestMethod.GET)
-	public Map<String, Object> getTripTruck(@PathVariable long tripId) {
+	public Map<String, Object> getTripTruck(@PathVariable long trip_id) {
 		Map<String, Object> res = new HashMap<>();
-		Trip trip = tripRepository.findOne(tripId);
+		Trip trip = tripRepository.findOne(trip_id);
 		if (trip == null) {
 			res.put("Error", "There's no Trip with this Id");
 		} else {
