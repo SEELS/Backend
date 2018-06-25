@@ -494,8 +494,9 @@ public class TruckRestController {
 					res.put("Values", "In Process" );
 				}
 				else
-					res.put("Success" ,trip.getTruck().getId());
+				{	res.put("Success" ,trip.getTruck().getId());
 					res.put("Values", "The state of this trip is not correct" );
+				}
 			}
 			else
 				res.put("Error", "There is no trip for this truck");
