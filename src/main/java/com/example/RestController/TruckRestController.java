@@ -474,18 +474,18 @@ public class TruckRestController {
 		Map<String, Object> res = new HashMap<>();
 		Trip trip = tripRepository.findOne(trip_id);
 		if (trip == null) {
-			if(trip.getState()==1)
-			    res.put("Success", "This Trip is not started yet, Truck id: "+trip.getTruck().getId() );
-			else if(trip.getState()==0)
-				res.put("Success", "This Trip is ended, Truck id: "+trip.getTruck().getId() );
-			else if(trip.getState()==2)
-				res.put("Success", "This Trip is in process, Truck id: "+trip.getTruck().getId() );
-			else
-				res.put("Success", "The state of this trip is not correct, Truck id: "+trip.getTruck().getId() );
+			res.put("Error", "There's no Trip with this Id");
 		} else {
 			if(trip.getTruck()!=null)
 			{
-				res.put("Success", trip.getTruck().getId() );
+				if(trip.getState()==1)
+					res.put("Success", "This Trip is not started yet, Truck id: "+trip.getTruck().getId() );
+				else if(trip.getState()==0)
+					res.put("Success", "This Trip is ended, Truck id: "+trip.getTruck().getId() );
+				else if(trip.getState()==2)
+					res.put("Success", "This Trip is in process, Truck id: "+trip.getTruck().getId() );
+				else
+					res.put("Success", "The state of this trip is not correct, Truck id: "+trip.getTruck().getId() );
 			}
 			else
 				res.put("Error", "There is no trip for this truck");
