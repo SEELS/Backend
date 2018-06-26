@@ -43,7 +43,8 @@ public class GoodRestController {
 	public Map<String ,Object> saveGoods(@PathVariable String name, @PathVariable String company, @PathVariable String barcode,
 			@PathVariable String date, @PathVariable int num_of_goods) {
 		Map<String, Object> res = new HashMap<>();
-		if (isValidDate(date)) {
+		if (isValidDate(date)) 
+		{
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			Date startDate = null;
 			try {
@@ -51,10 +52,41 @@ public class GoodRestController {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-			Good good = new Good();
-			//check barcode if this it's existed before
-			if(goodRepository.findOne(barcode)==null)
+			if(goodRepository.findOne(barcode)!=null)
 			{
+				Good good=goodRepository.findOne(barcode);
+				good.setBarcode(barcode);
+				good.setCompany(company);
+				good.setDate(startDate);
+				good.setName(name);
+				good.setNum_of_goods(num_of_goods);
+				if(good.isDeleted()==true)
+				{
+					good.setDeleted(false);
+					if (goodRepository.save(good) != null)
+					{
+						res.put("Success", "Good was deleted, now it's Avaliable!");
+					}
+					else
+					{
+						res.put("Error", "Connection Error!");
+					}
+				}
+				else
+				{
+					if (goodRepository.save(good) != null)
+					{
+						res.put("Success", "Good was existed before, now it's updated!");
+					}
+					else
+					{
+						res.put("Error", "Connection Error!");
+					}
+				}	
+			}
+			else
+			{
+				Good good = new Good();
 				good.setBarcode(barcode);
 				good.setCompany(company);
 				good.setDate(startDate);
@@ -69,11 +101,6 @@ public class GoodRestController {
 				{
 					res.put("Error", "Connection Error!");
 				}
-					
-			}
-			else
-			{
-				res.put("Error", "This barcode is existed, if you want to update check update good function!");
 			}
 		}
 		else
@@ -83,7 +110,6 @@ public class GoodRestController {
 		return res;
 
 	}
-
 	@RequestMapping(value = "/getAllGoods", method = RequestMethod.GET)
 	public Map<String, Object> getAllGoods() {
 		Map<String, Object> res = new HashMap<>();
