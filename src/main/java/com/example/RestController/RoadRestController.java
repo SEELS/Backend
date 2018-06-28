@@ -93,6 +93,8 @@ public class RoadRestController {
 			}
 			else
 			{
+				roadLocations.remove(0);
+				roadLocations.remove(0);
 				res.put("Success",roadLocations);
 			}
 		}
