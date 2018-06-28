@@ -208,6 +208,26 @@ public class TripRestController {
 		}
 		return res;
 	}
+	@RequestMapping(value = "/driverCompletedTrip/{driverId}", method = RequestMethod.GET)
+	public Map<String, Object> getDriverCompletedTrip(@PathVariable long driverId) {
+		Map<String, Object> res = new HashMap<>();
+		Driver driver = driverRepository.findOne(driverId);
+		if (driver == null) {
+			res.put("Error", "There's no driver with that Id");
+		} else {
+			ArrayList<Trip> trips = tripRepository.findByDriverAndDeletedAndState(driver, false, 0);
+			if (trips == null) {
+				res.put("Error", "There's no Trips for that Driver");
+			} 
+			else if(trips.isEmpty()) {
+				res.put("Error", "There's no Trips for that Driver");
+			}
+			else {
+				res.put("Success", trips);
+			}
+		}
+		return res;
+	}
 
 
 
