@@ -62,12 +62,13 @@ public class TripRestController {
 
 	//Modified by Mariam 
 	//Modified By Sameh
-	
+
 	@RequestMapping(value = "/saveTrip/{truck_id}/{driver_id}/{parent_id}/{road_id}/{date}/{good}", method = RequestMethod.GET)
 	public Map<String, String> saveTrip(@PathVariable String truck_id, @PathVariable String date,
 			@PathVariable long driver_id, @PathVariable long parent_id, @PathVariable long road_id,@PathVariable String good) {
 		Map<String, String> res = new HashMap<>();
 		int flag=0;
+		String bar="";
 		if(truckRepository.findOne(truck_id)!=null)
 		{
 			Truck truck = truckRepository.findOne(truck_id);
