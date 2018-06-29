@@ -269,13 +269,14 @@ public class GPS {
 			for (int i = 10; i <= diffrence; i += 10) {
 				penalty += 0.1;
 			}
-			p.setLocation(location);
+			if (penalty!=0)
+			{p.setLocation(location);
 			p.setTrip(trip);
 			p.setType("speed");
 			p.setValue(penalty);
 			if (penaltiesRepostitory.save(p) != null) {
 				rate(tripId);
-			}
+			}}
 
 		}
 	}
