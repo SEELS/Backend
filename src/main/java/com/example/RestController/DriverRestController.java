@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -96,23 +95,6 @@ public class DriverRestController {
 		double d = R * c;
 		return d; // return distance in meterd
 	}
-
-	@RequestMapping(value = "/count", method = RequestMethod.GET)
-	public double getcount() {
-		long id = 2;
-		Driver driver = driverRepository.findOne(id);
-		
-		return driver.getRate(); 
-	}
-	
-	@Scheduled(fixedRate=1000)
-	public void ratecount() {
-		long id = 2;
-		Driver driver = driverRepository.findOne(id);
-		driver.setRate(driver.getRate()+1);
-		driverRepository.save(driver);
-	}
-	
 	
 	//need to be tested with real data 
 	/* get nearest Trucks to my truck in specific range */

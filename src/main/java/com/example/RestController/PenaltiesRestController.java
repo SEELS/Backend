@@ -12,14 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Repostitory.DriverRepository;
-import com.example.Repostitory.LocationRepository;
 import com.example.Repostitory.PenaltiesRepostitory;
 import com.example.Repostitory.TripRepository;
 import com.example.models.Driver;
-import com.example.models.Location;
 import com.example.models.Penalties;
 import com.example.models.Trip;
-import com.example.models.Truck;
 
 @RestController
 @CrossOrigin(origins="*")
@@ -29,8 +26,6 @@ public class PenaltiesRestController {
 	@Autowired
 	private TripRepository tripRepository;
 	
-	@Autowired
-	private LocationRepository locationRepository;
 	
 	@Autowired
 	private PenaltiesRepostitory penaltiesRepostitory;

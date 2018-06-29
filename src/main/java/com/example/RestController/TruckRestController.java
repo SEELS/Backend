@@ -7,6 +7,7 @@ import java.util.Map;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -293,10 +294,24 @@ public class TruckRestController {
 		return res;
 	}
 
+	
+	
+	@Scheduled(fixedRate=60000)
+	public void meetingPoint()
+	{
+		ArrayList<Truck> trucks = truckRepository.findAllByActive(true);
+		for(int i=0;i<trucks.size();i++)
+		{
+			for(int j = i+1;j<trucks.size();j++)
+			{
+				changeInSpeed(trucks.get(i).getId(), trucks.get(j).getId());
+			}
+		}
+	}
+	
 	/* modified by Mariam */
 	//modified by Amina
-	@RequestMapping(value = "/{truck1_id}/{truck2_id}/changeInSpeed", method = RequestMethod.GET)
-	public Map<String,Object> changeInSpeed(@PathVariable String truck1_id, @PathVariable String truck2_id) {
+	public Map<String,Object> changeInSpeed(String truck1_id, String truck2_id) {
 		
 		Map<String, Object> res = new HashMap<>();
 		if(truckRepository.findOne(truck1_id)!=null)
