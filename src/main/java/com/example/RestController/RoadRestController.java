@@ -70,6 +70,7 @@ public class RoadRestController {
 	}
 
 
+	
 	//Error Free :D 
 	@RequestMapping(value = "/getRoad/{road_id}", method = RequestMethod.GET)
 	public Map<String, Object> getRoad(@PathVariable long road_id) 
@@ -85,22 +86,21 @@ public class RoadRestController {
 			ArrayList<Location> roadLocations = locationRepository.findByDeletedAndRoadOrderByTimeDesc(false, road);
 			if(roadLocations ==null)
 			{
-				res.put("Error", "there's no Location in this road");
+				res.put("Error", "there's no Location for this road");
 			}
-			else if(roadLocations.isEmpty() || roadLocations.size()==2)
+			else if(roadLocations.size()==2)
 			{
-				res.put("Error", "this A new Road his trip not started yet");
+				res.put("Success", "This is a new road!");
 			}
 			else
 			{
-				roadLocations.remove(0);
-				roadLocations.remove(0);
 				res.put("Success",roadLocations);
 			}
 		}
 		return res;
 
 	}
+	
 	
 	
 	//Error Free :D 
