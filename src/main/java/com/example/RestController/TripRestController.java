@@ -467,34 +467,15 @@ public class TripRestController {
 	@RequestMapping(value = "/getAvaliablityOfNumOfGoods/{barcode}", method = RequestMethod.GET)
 	public Map<String,Object> getAvaliablityOfNumOfGoods(@PathVariable String barcode) {
 		Map<String,Object> res = new HashMap<>();
-		
-		if (goodRepository.findOne(barcode) == null) {
-			
-			res.put("Error", "Invalid barcode!");
-		} 
-		else 
+		Good good=goodRepository.findOne(barcode);
+		if(good==null)
 		{
-			Good good=goodRepository.findOne(barcode);
-		
-		ArrayList<TripGood> tripGood = (ArrayList<TripGood>)tripGoodRepository.findAllByGood(good);
-		int counter=0;
-		for(int i=0;i<tripGood.size();i++)
-		{
-			counter+=tripGood.get(i).getNum_of_goods();
+			res.put("Error", "There isn't good!");
 		}
-		
-		
-
-			if(good==null)
-			{
-				res.put("Error", "There isn't good!");
-			}
-			else
-			{
-				int aval=good.getNum_of_goods();
-				int result=aval-counter;
-				res.put("Success", result);
-			}
+		else
+		{
+			int avail=good.getNum_of_goods();
+			res.put("Success", avail);
 		}
 		return res;
 	}
