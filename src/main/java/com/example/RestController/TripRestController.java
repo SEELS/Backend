@@ -296,7 +296,6 @@ public class TripRestController {
 					else {
 						if(trip.getState()==1 )
 						{
-							//also need to change state of good
 							trip.setState(2);
 							if(tripRepository.save(trip)!=null)
 							{
