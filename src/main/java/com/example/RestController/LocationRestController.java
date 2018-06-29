@@ -29,7 +29,7 @@ import com.example.models.Truck;
 @RestController
 @CrossOrigin(origins = "*")
 
-public class GPS {
+public class LocationRestController {
 
 	@Autowired
 	private LocationRepository locationRepository;
