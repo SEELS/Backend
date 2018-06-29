@@ -94,6 +94,8 @@ public class RoadRestController {
 			}
 			else
 			{
+				roadLocations.remove(roadLocations.size()-1);
+				roadLocations.remove(roadLocations.size()-1);
 				res.put("Success",roadLocations);
 			}
 		}
