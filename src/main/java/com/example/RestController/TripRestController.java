@@ -61,7 +61,6 @@ public class TripRestController {
 
 	//Modified by Mariam 
 	//Modified By Sameh
-	
 @RequestMapping(value = "/saveTrip/{truck_id}/{driver_id}/{parent_id}/{road_id}/{date}/{good}", method = RequestMethod.GET)
 	public Map<String, String> saveTrip(@PathVariable String truck_id, @PathVariable String date,
 			@PathVariable long driver_id, @PathVariable long parent_id, @PathVariable long road_id,@PathVariable String good) {
@@ -125,20 +124,9 @@ public class TripRestController {
 								{
 									String[] CountsWithGoods=barcode[i].split(":");
 									Good g=goodRepository.findOne(CountsWithGoods[0]);
-							    	ArrayList<TripGood> tripGoods = (ArrayList<TripGood>)tripGoodRepository.findAllByGood(g);
-									int counter=0;
-									for(int j=0;j<tripGoods.size();j++)
-									{
-										counter+=tripGoods.get(j).getNum_of_goods();
-									}
 							    	int num=g.getNum_of_goods();
-							    	System.out.println(num);
-							    	System.out.println(counter);
-							    	int avail=num-counter;
-							    	System.out.println(avail);
 							    	int newNum=Integer.parseInt(CountsWithGoods[1]);
-							    	System.out.println(newNum);
-							    	if(newNum>avail)
+							    	if(newNum>num)
 							    	{
 							    		flag=3;
 							    		bar=g.getBarcode();
@@ -168,6 +156,17 @@ public class TripRestController {
 									    		flag=1;
 									    		break;
 									    	}
+									    	else
+									    	{
+									    		int newNum=Integer.parseInt(CountsWithGoods[1]);
+									    		int avail=g.getNum_of_goods()-newNum;
+									    		g.setNum_of_goods(avail);
+									    		if(goodRepository.save(g)==null)
+									    		{
+									    			flag=2;
+									    			break;
+									    		}
+									    	}
 										   
 										}
 										if(flag==1)
@@ -177,6 +176,10 @@ public class TripRestController {
 										else if(flag==0)
 										{
 								    		res.put("Success", "Trip is added");
+										}
+										else if(flag==2)
+										{
+								    		res.put("Error", "Connection Error by saving Goods with new number of goods");
 										}
 									}
 									else 
@@ -206,7 +209,7 @@ public class TripRestController {
 		
 		return res;
 	}
-					
+	
 	@RequestMapping(value = "/returnTrip/{trip_id}", method = RequestMethod.GET)
 	public Map<String,Object> saveTripRoad(@PathVariable long trip_id) {
 		Map<String, Object> res = new HashMap<>();
