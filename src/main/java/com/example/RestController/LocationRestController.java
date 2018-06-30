@@ -87,10 +87,6 @@ public class LocationRestController {
 				if (truck == null) {
 					res.put("Error", "Driver's truck is not found !!");
 				} else {
-					/* rate Part */
-					calculateSpeedPenalty(tripId);
-					calculateBrakePenalty(truck.getPreviousSpeed(), truck.getCurrentSpeed(), tripId);
-					
 					l.setTruck(truck);
 					if (locationRepository.save(l) == null) {
 						res.put("Error", "Connection Error");
@@ -104,8 +100,12 @@ public class LocationRestController {
 							TripLocation tripLocation = new TripLocation();
 							tripLocation.setLocation(l);
 							tripLocation.setTrip(trip);
-							if (tripLocationRepository.save(tripLocation) != null)
+							if (tripLocationRepository.save(tripLocation) != null){
 								res.put("Success", "location is added");
+								/* rate Part */
+								calculateSpeedPenalty(tripId);
+								calculateBrakePenalty(truck.getPreviousSpeed(), truck.getCurrentSpeed(), tripId);
+							}
 							else
 								res.put("Error", "Connection Error");
 
