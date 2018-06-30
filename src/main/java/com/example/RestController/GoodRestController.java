@@ -39,6 +39,7 @@ public class GoodRestController {
 	private TripRepository tripRepository;
 
 
+	
 	@RequestMapping(value = "/saveGoods/{name}/{company}/{barcode}/{date}/{num_of_goods}", method = RequestMethod.GET)
 	public Map<String ,Object> saveGoods(@PathVariable String name, @PathVariable String company, @PathVariable String barcode,
 			@PathVariable String date, @PathVariable int num_of_goods) {
@@ -55,17 +56,17 @@ public class GoodRestController {
 			if(goodRepository.findOne(barcode)!=null)
 			{
 				Good good=goodRepository.findOne(barcode);
-				good.setBarcode(barcode);
-				good.setCompany(company);
-				good.setDate(startDate);
-				good.setName(name);
-				good.setNum_of_goods(num_of_goods);
 				if(good.isDeleted()==true)
 				{
+					good.setBarcode(barcode);
+					good.setCompany(company);
+					good.setDate(startDate);
+					good.setName(name);
+					good.setNum_of_goods(num_of_goods);
 					good.setDeleted(false);
 					if (goodRepository.save(good) != null)
 					{
-						res.put("Success", "Good was deleted, now it's Avaliable!");
+						res.put("Success", "Good was deleted, now it's Avaliable and updated!");
 					}
 					else
 					{
@@ -74,15 +75,9 @@ public class GoodRestController {
 				}
 				else
 				{
-					if (goodRepository.save(good) != null)
-					{
-						res.put("Success", "Good was existed before, now it's updated!");
-					}
-					else
-					{
-						res.put("Error", "Connection Error!");
-					}
+					res.put("Error", "This Good is existed Already!");
 				}	
+				
 			}
 			else
 			{
@@ -101,7 +96,9 @@ public class GoodRestController {
 				{
 					res.put("Error", "Connection Error!");
 				}
+				
 			}
+			
 		}
 		else
 		{
@@ -110,6 +107,7 @@ public class GoodRestController {
 		return res;
 
 	}
+
 	@RequestMapping(value = "/getAllGoods", method = RequestMethod.GET)
 	public Map<String, Object> getAllGoods() {
 		Map<String, Object> res = new HashMap<>();
