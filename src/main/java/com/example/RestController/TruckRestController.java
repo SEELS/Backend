@@ -351,7 +351,7 @@ public class TruckRestController {
 
 										String Key="AIzaSyBrcdEhjh8S2NbfjCKzvUnxpK6PmiCYTfw";
 										String Message="be carefull ya ramaaaaa, you will have an accident soon isA 🙂";
-										if (dist <= 1000)
+										if (dist <= 10)
 										{
 											send_FCM_Notification(tokenDriver1,Key,Message);
 											send_FCM_Notification(tokenDriver2,Key,Message);
@@ -359,7 +359,7 @@ public class TruckRestController {
 										}
 										else {		
 											//by assuming they are in the same direction
-											double Time=dist/(truck1Speed+truck2Speed);
+											double Time=dist/(truck1Speed-truck2Speed);
 											if(Time>1)
 											{
 												Message="there is a driver named "+driver1.getName() +" who you will meet after: "+Time +" hr";
@@ -370,6 +370,7 @@ public class TruckRestController {
 											}
 											else
 											{
+												
 												Time=Time*60;
 												Message="there is a driver named "+driver1.getName() +" who you will meet after: "+Time +" Min";
 												send_FCM_Notification(tokenDriver1,Key,Message);
@@ -679,6 +680,7 @@ public class TruckRestController {
 		else if( status != 0){
 			res.put("Success", "There is no Errors!");
 		}
+			
 		}
 		catch(MalformedURLException mlfexception){
 		res.put("Error occurred while sending push Notification!.." ,mlfexception.getMessage());
