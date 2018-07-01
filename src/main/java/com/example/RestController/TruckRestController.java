@@ -629,7 +629,8 @@ public class TruckRestController {
 	}
 	
 	
-@RequestMapping(value = "/send_FCM_Notification/{tokenId}/{message}", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/send_FCM_Notification/{tokenId}/{message}", method = RequestMethod.GET)
 	public void send_FCM_Notification(@PathVariable String tokenId,@PathVariable String message){
 		try{
 		String server_key="AIzaSyBrcdEhjh8S2NbfjCKzvUnxpK6PmiCYTfw";
@@ -681,6 +682,6 @@ public class TruckRestController {
 		}catch (Exception exception) {
 		System.out.println("Error occurred while sending push Notification!.." + exception.getMessage());
 		}
-		}
+		}	
 
 }
