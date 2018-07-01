@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Repostitory.DriverRepository;
 import com.example.Repostitory.LocationRepository;
 import com.example.Repostitory.TripRepository;
+import com.example.Repostitory.TruckRepository;
 import com.example.models.Driver;
 import com.example.models.Location;
 import com.example.models.Trip;
+import com.example.models.Truck;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -29,6 +31,10 @@ public class DriverRestController {
 
 	@Autowired
 	private TripRepository tripRepository;
+	
+
+	@Autowired
+	private TruckRepository truckRepository;
 	
 	//Error Free :D 
 	@RequestMapping(value = "/{name}/{ssn}/{password}/saveDriver", method = RequestMethod.GET)
@@ -66,14 +72,15 @@ public class DriverRestController {
 		}
 		return res;
 	}
-	
-	
-	
 
 	public double getDistanceBetweenTwoTruck(Driver first, Driver second) {
 		Location truckOneLocation = locationRepository.findFirstByDriverOrderByIdDesc(first);
 		Location truckTwoLocation = locationRepository.findFirstByDriverOrderByIdDesc(second);
-
+		Truck truck = truckRepository.findByDriver(second);
+		if(!truck.getActive())
+		{
+			return Double.MAX_VALUE;
+		}
 		if (truckOneLocation != null && truckTwoLocation != null)
 			return getDistance(truckOneLocation, truckTwoLocation);
 		else
@@ -99,7 +106,7 @@ public class DriverRestController {
 	//need to be tested with real data 
 	/* get nearest Trucks to my truck in specific range */
 	@RequestMapping(value = "/getNearLocation/{driverId}/{range}", method = RequestMethod.GET)
-	public Map<String,Object> getNearTrucksToTruck(@PathVariable long driverId, @PathVariable double range) {
+	public Map<String,Object> getNearTrucksToDriver(@PathVariable long driverId, @PathVariable double range) {
 		Map<String,Object > res = new HashMap<>();
 		ArrayList<Driver> nearestDriver = new ArrayList<>();
 		ArrayList<Location> nearestDriverLocation = new ArrayList<>();
