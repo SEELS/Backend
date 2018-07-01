@@ -652,7 +652,7 @@ public class TruckRestController {
 		conn.setRequestMethod("POST");
 		conn.setRequestProperty("Authorization","key="+server_key);
 		conn.setRequestProperty("Content-Type","application/json");
-		String Message="{to:"+tokenId.trim()+','+"notification:"+"{title:"+"Here is your notification."+','+"body:"+message+"}}";
+		String Message="{notification:"+"{title:"+"Here is your notification."+','+"body:"+message+"},to:"+tokenId.trim()+"}";
 //		JSONObject infoJson = new JSONObject();
 //		infoJson.put("title","Here is your notification.");
 //		infoJson.put("body", message);
