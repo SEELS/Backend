@@ -630,58 +630,60 @@ public class TruckRestController {
 	
 	
 
-// 	@RequestMapping(value = "/send_FCM_Notification/{tokenId}/{message}", method = RequestMethod.GET)
-// 	public void send_FCM_Notification(@PathVariable String tokenId,@PathVariable String message){
-// 		try{
-// 		String server_key="AIzaSyBrcdEhjh8S2NbfjCKzvUnxpK6PmiCYTfw";
-// 		URL url = new URL("https://fcm.googleapis.com/fcm/send");
-// 		HttpURLConnection conn;
-// 		conn = (HttpURLConnection) url.openConnection();
-// 		conn.setUseCaches(false);
-// 		conn.setDoInput(true);
-// 		conn.setDoOutput(true);
-// 		conn.setRequestMethod("POST");
-// 		conn.setRequestProperty("Authorization","key="+server_key);
-// 		conn.setRequestProperty("Content-Type","application/json");
-// 		String Message="{to:"+tokenId.trim()+','+"notification:"+"{title:"+"Here is your notification."+','+"body:"+message+"}}";
-// //		JSONObject infoJson = new JSONObject();
-// //		infoJson.put("title","Here is your notification.");
-// //		infoJson.put("body", message);
-// //		JSONObject toJson = new JSONObject();
-// //		toJson.put("to",tokenId.trim());
-// //		toJson.put("notification", infoJson);
-// 		OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-// 		wr.write(Message);
-// 		wr.flush();
-// 		int status = 0;
-// 		if( null != conn ){
-// 		status = conn.getResponseCode();
-// 		}
-// 		if( status != 0)
-// 		{
-// 			System.out.println("Success");
-// 		}
-// 		if( status == 200 ){
-// 		BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-// 		System.out.println("Android Notification Response : " + reader.readLine());
-// 		}else if(status == 401){
-// 		System.out.println("Notification Response : TokenId : " + tokenId + " Error occurred :");
-// 		}else if(status == 501){
-// 		System.out.println("Notification Response : [ errorCode=ServerError ] TokenId : " + tokenId);
-// 		}else if( status == 503){
-// 		System.out.println("Notification Response : FCM Service is Unavailable  TokenId : " + tokenId);
-// 		}
-// 		}
-// 		catch(MalformedURLException mlfexception){
-// 		System.out.println("Error occurred while sending push Notification!.." + mlfexception.getMessage());
-// 		}catch(IOException mlfexception){
-// 		System.out.println("Reading URL, Error occurred while sending push Notification!.." + mlfexception.getMessage());
-// //		}catch(JSONException jsonexception){
-// //		System.out.println("Message Format, Error occurred while sending push Notification!.." + jsonexception.getMessage());
-// //		
-// 		}catch (Exception exception) {
-// 		System.out.println("Error occurred while sending push Notification!.." + exception.getMessage());
-// 		}
-// 		}	
+@RequestMapping(value = "/send_FCM_Notification/{tokenId}/{message}", method = RequestMethod.GET)
+	public Map<String,Object> send_FCM_Notification(@PathVariable String tokenId,@PathVariable String message)
+	{
+		Map<String, Object> res = new HashMap<>();
+		try{
+		String server_key="AIzaSyBrcdEhjh8S2NbfjCKzvUnxpK6PmiCYTfw";
+		URL url = new URL("https://fcm.googleapis.com/fcm/send");
+		HttpURLConnection conn;
+		conn = (HttpURLConnection) url.openConnection();
+		conn.setUseCaches(false);
+		conn.setDoInput(true);
+		conn.setDoOutput(true);
+		conn.setRequestMethod("POST");
+		conn.setRequestProperty("Authorization","key="+server_key);
+		conn.setRequestProperty("Content-Type","application/json");
+		String Message="{to:"+tokenId.trim()+','+"notification:"+"{title:"+"Here is your notification."+','+"body:"+message+"}}";
+//		JSONObject infoJson = new JSONObject();
+//		infoJson.put("title","Here is your notification.");
+//		infoJson.put("body", message);
+//		JSONObject toJson = new JSONObject();
+//		toJson.put("to",tokenId.trim());
+//		toJson.put("notification", infoJson);
+		OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+		wr.write(Message);
+		wr.flush();
+		int status = 0;
+		if( null != conn ){
+		status = conn.getResponseCode();
+		}
+		if( status == 200 ){
+		BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		res.put("Android Notification Response" , reader.readLine());
+		}else if(status == 401){
+		res.put("Notification Response TokenId",tokenId +"Error occurred");
+		}else if(status == 501){
+		res.put("Notification Response","[ errorCode=ServerError ] TokenId : " + tokenId);
+		}else if( status == 503){
+		res.put("Notification Response", "FCM Service is Unavailable  TokenId : " + tokenId);
+		}
+		else if( status != 0){
+			res.put("Success", "There is no Errors!");
+		}
+		}
+		catch(MalformedURLException mlfexception){
+		res.put("Error occurred while sending push Notification!.." ,mlfexception.getMessage());
+		}catch(IOException mlfexception){
+		res.put("Reading URL, Error occurred while sending push Notification!.." , mlfexception.getMessage());
+//		}catch(JSONException jsonexception){
+//		System.out.println("Message Format, Error occurred while sending push Notification!.." + jsonexception.getMessage());
+//		
+		}catch (Exception exception) {
+		res.put("Error occurred while sending push Notification!..",exception.getMessage());
+		}
+		return res;
+		}	
 
 }
