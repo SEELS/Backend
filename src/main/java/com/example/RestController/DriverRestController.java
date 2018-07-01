@@ -77,7 +77,8 @@ public class DriverRestController {
 		Location truckOneLocation = locationRepository.findFirstByDriverOrderByIdDesc(first);
 		Location truckTwoLocation = locationRepository.findFirstByDriverOrderByIdDesc(second);
 		Truck truck = truckRepository.findByDriver(second);
-		if(!truck.getActive())
+		
+		if(truck!=null && !truck.getActive())
 		{
 			return Double.MAX_VALUE;
 		}
@@ -133,10 +134,6 @@ public class DriverRestController {
 							Location driverLocation =locationRepository.findFirstByDriverOrderByIdDesc(driver);
 							nearestDriverLocation.add(driverLocation);
 							res.put("Success", nearestDriverLocation);
-						}
-						else 
-						{
-							res.put("Error", "There is no location for this driver!");
 						}
 					}
 					
