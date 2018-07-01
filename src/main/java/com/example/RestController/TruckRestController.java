@@ -679,6 +679,7 @@ public class TruckRestController {
 		else if( status != 0){
 			res.put("Success", "There is no Errors!");
 		}
+			
 		}
 		catch(MalformedURLException mlfexception){
 		res.put("Error occurred while sending push Notification!.." ,mlfexception.getMessage());
