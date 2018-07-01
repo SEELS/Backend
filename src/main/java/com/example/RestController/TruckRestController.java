@@ -318,7 +318,7 @@ public class TruckRestController {
 	
 	/* modified by Mariam */
 	//modified by Amina
-	public Map<String,Object> changeInSpeed(String truck1_id, String truck2_id) {
+	public Map<String,Object> changeInSpeed(@PathVariable String truck1_id, @PathVariable String truck2_id) {
 		
 		Map<String, Object> res = new HashMap<>();
 		if(truckRepository.findOne(truck1_id)!=null)
@@ -353,8 +353,8 @@ public class TruckRestController {
 										String Message="be carefull ya ramaaaaa, you will have an accident soon isA 🙂";
 										if (dist <= 1000)
 										{
-											//send_FCM_Notification(tokenDriver1,Key,Message);
-											//send_FCM_Notification(tokenDriver2,Key,Message);
+											send_FCM_Notification(tokenDriver1,Key,Message);
+											send_FCM_Notification(tokenDriver2,Key,Message);
 											res.put("Possible accident", "They are will have an accident soon"); // Possible accident, distance <= 1km
 										}
 										else {		
@@ -363,18 +363,18 @@ public class TruckRestController {
 											if(Time>1)
 											{
 												Message="there is a driver named "+driver1.getName() +" who you will meet after: "+Time +" hr";
-												//send_FCM_Notification(tokenDriver1,Key,Message);
+												send_FCM_Notification(tokenDriver1,Key,Message);
 												Message="there is a driver named "+driver2.getName() +" who you will meet after: "+Time +" hr";
-												//send_FCM_Notification(tokenDriver2,Key,Message);
+												send_FCM_Notification(tokenDriver2,Key,Message);
 												res.put("No possible accident", "They will meet after: "+Time+" hr" );
 											}
 											else
 											{
 												Time=Time*60;
 												Message="there is a driver named "+driver1.getName() +" who you will meet after: "+Time +" Min";
-												//send_FCM_Notification(tokenDriver1,Key,Message);
+												send_FCM_Notification(tokenDriver1,Key,Message);
 												Message="there is a driver named "+driver2.getName() +" who you will meet after: "+Time+ " Min";
-												//send_FCM_Notification(tokenDriver2,Key,Message);
+												send_FCM_Notification(tokenDriver2,Key,Message);
 												res.put("No possible accident", "They will meet after: "+Time+"Min" );
 											}
 										}
@@ -637,12 +637,11 @@ public class TruckRestController {
 	
 	
 
-@RequestMapping(value = "/send_FCM_Notification/{tokenId}/{message}", method = RequestMethod.GET)
-	public Map<String,Object> send_FCM_Notification(@PathVariable String tokenId,@PathVariable String message)
+@RequestMapping(value = "/send_FCM_Notification/{tokenId}/{server_key}/{message}", method = RequestMethod.GET)
+	public Map<String,Object> send_FCM_Notification(@PathVariable String tokenId,@PathVariable String server_key,@PathVariable String message)
 	{
 		Map<String, Object> res = new HashMap<>();
 		try{
-		String server_key="AIzaSyBrcdEhjh8S2NbfjCKzvUnxpK6PmiCYTfw";
 		URL url = new URL("https://fcm.googleapis.com/fcm/send");
 		HttpURLConnection conn;
 		conn = (HttpURLConnection) url.openConnection();
@@ -652,7 +651,7 @@ public class TruckRestController {
 		conn.setRequestMethod("GET");
 		conn.setRequestProperty("Authorization","key="+server_key);
 		conn.setRequestProperty("Content-Type","application/json");
-		String Message="{\"notification\":{\"title\":\"Here is your notification.\",\"body\":\""+message+"\"},\"to\":\""+tokenId.trim()+"\"}";
+		String Message="{\"notification\":{\"title\":\"Here is your notification.\",\"body\":\""+message+"\"},\"to\":\""+tokenId+"\"}";
 		System.out.println(Message);
 //		JSONObject infoJson = new JSONObject();
 //		infoJson.put("title","Here is your notification.");
@@ -693,4 +692,5 @@ public class TruckRestController {
 		}
 		return res;
 		}
+	
 }
