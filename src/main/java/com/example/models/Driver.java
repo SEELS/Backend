@@ -59,6 +59,7 @@ public class Driver {
 	}
 	public double getRate()
 	{
+		rate = Double.parseDouble(String.format("%.3f", rate));
 		return rate;
 	}
 	

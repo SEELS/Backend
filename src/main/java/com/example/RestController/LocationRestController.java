@@ -65,6 +65,7 @@ public class LocationRestController {
 		Date date = new Date();
 		l.setTime(date);
 		Trip trip;
+		speed = Double.parseDouble(String.format("%.3f", speed));
 		if (tripRepository.findOne(tripId) != null)
 			trip = tripRepository.findOne(tripId);
 		else {

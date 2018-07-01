@@ -137,6 +137,7 @@ public class Trip {
 	}
 
 	public double getRate() {
+		rate = Double.parseDouble(String.format("%.3f", rate));
 		return rate;
 	}
 
