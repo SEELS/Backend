@@ -370,6 +370,7 @@ public class TruckRestController {
 											}
 											else
 											{
+												
 												Time=Time*60;
 												Message="there is a driver named "+driver1.getName() +" who you will meet after: "+Time +" Min";
 												send_FCM_Notification(tokenDriver1,Key,Message);
