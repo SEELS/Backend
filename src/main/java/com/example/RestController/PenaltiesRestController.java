@@ -63,6 +63,33 @@ public class PenaltiesRestController {
 	}
 	
 	//Error Free :D 
+	@RequestMapping(value="/getPenaltiesByDriverTrip/{driverId}",method=RequestMethod.GET)
+	public Map<String,Object> getPenaltiesByDriverTrip(@PathVariable long driverId)
+	{
+		Map<String,Object> res = new HashMap<> ();
+		Driver driver = driverRepository.findOne(driverId);
+		if(driver==null)
+		{
+			res.put("Error", "no driver with this id");
+		}
+		else
+		{
+			Trip trip = tripRepository.findFirstByDriverAndDeletedAndStateOrderByIdDesc(driver, false, 2); 
+			ArrayList<Penalties> penalties= penaltiesRepostitory.findByTrip(trip);
+			if (penalties==null)
+			{
+				res.put("Error", "no penalties for this trip");
+			}
+			else
+			{
+				res.put("Success",penalties);
+			}
+		
+		}	
+		return res;
+	}
+	
+	//Error Free :D 
 	@RequestMapping (value="/getPenaltiesByDriver/{driverId}",method=RequestMethod.GET)
 	public Map<String,Object> getPenaltiesByDriver(@PathVariable long driverId)
 	{
