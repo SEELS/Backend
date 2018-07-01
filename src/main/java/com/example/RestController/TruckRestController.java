@@ -649,10 +649,11 @@ public class TruckRestController {
 		conn.setUseCaches(false);
 		conn.setDoInput(true);
 		conn.setDoOutput(true);
-		conn.setRequestMethod("POST");
+		conn.setRequestMethod("GET");
 		conn.setRequestProperty("Authorization","key="+server_key);
 		conn.setRequestProperty("Content-Type","application/json");
-		String Message="{notification:"+"{title:"+"Here is your notification."+','+"body:"+message+"},to:"+tokenId.trim()+"}";
+		String Message="{\"notification\":{\"title\":\"Here is your notification.\",\"body\":\""+message+"\"},\"to\":\""+tokenId.trim()+"\"}";
+		System.out.println(Message);
 //		JSONObject infoJson = new JSONObject();
 //		infoJson.put("title","Here is your notification.");
 //		infoJson.put("body", message);
@@ -691,6 +692,5 @@ public class TruckRestController {
 		res.put("Error occurred while sending push Notification!..",exception.getMessage());
 		}
 		return res;
-		}	
-
+		}
 }
