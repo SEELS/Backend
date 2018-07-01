@@ -78,7 +78,11 @@ public class DriverRestController {
 		Location truckTwoLocation = locationRepository.findFirstByDriverOrderByIdDesc(second);
 		Truck truck = truckRepository.findByDriver(second);
 		
-		if(truck!=null && !truck.getActive())
+		if(truck== null)
+		{
+			return Double.MAX_VALUE;
+		}
+		else if(!truck.getActive())
 		{
 			return Double.MAX_VALUE;
 		}
