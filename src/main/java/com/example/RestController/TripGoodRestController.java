@@ -1,12 +1,5 @@
 package com.example.RestController;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,7 +86,7 @@ public class TripGoodRestController {
 								Driver d=trip.getDriver();
 								String tokenID=d.getToken();
 								String message="There are lost goods while scanning in!";
-								send_FCM_Notification(tokenID,message);
+								//send_FCM_Notification(tokenID,message);
 								tripGood.setState(1);
 								if(tripGoodRepository.save(tripGood)!=null)							
 									res.put("Error", "Lost Goods");
@@ -172,7 +165,7 @@ public class TripGoodRestController {
 								Driver d=trip.getDriver();
 								String tokenID=d.getToken();
 								String message="There are lost goods while scanning out!";
-								send_FCM_Notification(tokenID,message);
+								//send_FCM_Notification(tokenID,message);
 								tripGood.setState(1);
 								if(tripGoodRepository.save(tripGood)!=null)							
 									res.put("Warring", "Lost Goods");
@@ -222,64 +215,6 @@ public class TripGoodRestController {
 		return res;
 	}
 	
-	
-	public Map<String,Object> send_FCM_Notification(String tokenId,String message)
-	{
-		String server_key = "AIzaSyBrcdEhjh8S2NbfjCKzvUnxpK6PmiCYTfw";
-		Map<String, Object> res = new HashMap<>();
-		try{
-		URL url = new URL("https://fcm.googleapis.com/fcm/send");
-		HttpURLConnection conn;
-		conn = (HttpURLConnection) url.openConnection();
-		conn.setUseCaches(false);
-		conn.setDoInput(true);
-		conn.setDoOutput(true);
-		conn.setRequestMethod("GET");
-		conn.setRequestProperty("Authorization","key="+server_key);
-		conn.setRequestProperty("Content-Type","application/json");
-		String Message="{\"notification\":{\"title\":\"Good Count Error.\",\"sound\":\"default\",\"body\":\""+message+"\"},\"to\":\""+tokenId+"\"}";
-		System.out.println(Message);
-//		JSONObject infoJson = new JSONObject();
-//		infoJson.put("title","Here is your notification.");
-//		infoJson.put("body", message);
-//		JSONObject toJson = new JSONObject();
-//		toJson.put("to",tokenId.trim());
-//		toJson.put("notification", infoJson);
-		OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-		wr.write(Message);
-		wr.flush();
-		int status = 0;
-		if( null != conn ){
-		status = conn.getResponseCode();
-		}
-		if( status == 200 ){
-		BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		res.put("Android Notification Response" , reader.readLine());
-		}else if(status == 401){
-		res.put("Notification Response TokenId",tokenId +"Error occurred");
-		}else if(status == 501){
-		res.put("Notification Response","[ errorCode=ServerError ] TokenId : " + tokenId);
-		}else if( status == 503){
-		res.put("Notification Response", "FCM Service is Unavailable  TokenId : " + tokenId);
-		}
-		else if( status != 0){
-			res.put("Success", "There is no Errors!");
-		}
-			
-		}
-		catch(MalformedURLException mlfexception){
-		res.put("Error occurred while sending push Notification!.." ,mlfexception.getMessage());
-		}catch(IOException mlfexception){
-		res.put("Reading URL, Error occurred while sending push Notification!.." , mlfexception.getMessage());
-//		}catch(JSONException jsonexception){
-//		System.out.println("Message Format, Error occurred while sending push Notification!.." + jsonexception.getMessage());
-//		
-		}catch (Exception exception) {
-		res.put("Error occurred while sending push Notification!..",exception.getMessage());
-		}
-		return res;
-		}
-
 	
 	
 	
