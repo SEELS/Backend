@@ -16,4 +16,5 @@ public interface TripGoodRepository extends CrudRepository<TripGood, Long>
 	public TripGood findByTripAndGood(Trip trip,Good good);
 	// that was the .......... error
 	//public TripGood findFirstByGoodOrderByDesc(Good good);
+	public TripGood findFirstByGoodOrderByIdDesc(Good good);
 }
