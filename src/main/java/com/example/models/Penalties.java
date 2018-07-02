@@ -23,7 +23,6 @@ public class Penalties {
 	@Column(name = "value")
 	private double value;
 	
-	
 	@ManyToOne
 	@JoinColumn(name="trip_id")
 	private Trip trip;
@@ -108,7 +107,9 @@ public class Penalties {
 	public void setLocation(Location location) {
 		this.location = location;
 	}
-	
+
+
+
 	
 
 	
