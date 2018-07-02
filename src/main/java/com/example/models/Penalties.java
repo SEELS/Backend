@@ -112,13 +112,13 @@ public class Penalties {
 		this.location = location;
 	}
 	
-	public String getCause() {
+	public double getCause() {
 		return cause;
 	}
 
 
 
-	public void setCause(String cause) {
+	public void setCause(double cause) {
 		this.cause = cause;
 	}
 
