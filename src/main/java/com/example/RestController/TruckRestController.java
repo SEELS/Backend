@@ -350,7 +350,7 @@ public class TruckRestController {
 									{
 
 										String Key="AIzaSyBrcdEhjh8S2NbfjCKzvUnxpK6PmiCYTfw";
-										String Message="be carefull ya ramaaaaa, you will have an accident soon isA 🙂";
+										String Message="be carefull, you will have an accident soon!!";
 										if (dist <= 10)
 										{
 											send_FCM_Notification(tokenDriver1,Key,Message);
@@ -359,7 +359,11 @@ public class TruckRestController {
 										}
 										else {		
 											//by assuming they are in the same direction
-											double Time=dist/(truck1Speed-truck2Speed);
+											double Time=dist;
+											if(truck1Speed>truck2Speed)
+												Time /=(truck1Speed-truck2Speed);
+											else
+												Time /=(truck2Speed-truck1Speed);
 											if(Time>1)
 											{
 												Message="there is a driver named "+driver1.getName() +" who you will meet after: "+Time +" hr";
