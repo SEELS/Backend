@@ -13,7 +13,6 @@ import com.example.Repostitory.GoodRepository;
 import com.example.Repostitory.TripGoodRepository;
 import com.example.Repostitory.TripRepository;
 import com.example.Repostitory.TruckRepository;
-import com.example.models.Driver;
 import com.example.models.Good;
 import com.example.models.Trip;
 import com.example.models.TripGood;
@@ -81,15 +80,12 @@ public class TripGoodRestController {
 						{
 							if(tripGood.getScan_in_num_of_goods()<tripGood.getNum_of_goods())
 							{
-								
+								res.put("Error", "Lost Goods");
 								//change the state of goods lost
-								Driver d=trip.getDriver();
-								String tokenID=d.getToken();
-								String message="There are lost goods while scanning in!";
-								//send_FCM_Notification(tokenID,message);
+								//notify the Manager
 								tripGood.setState(1);
 								if(tripGoodRepository.save(tripGood)!=null)							
-									res.put("Error", "Lost Goods");
+									res.put("Success", "The scanning is valid");
 								else
 									res.put("Error", "Connection Error");
 							}
@@ -104,6 +100,7 @@ public class TripGoodRestController {
 									res.put("Success", "The scanning is valid");
 								else
 									res.put("Error", "Connection Error");
+								res.put("Success", "The scanning process is valid");
 
 							}
 						}
@@ -162,13 +159,12 @@ public class TripGoodRestController {
 						{
 							if(tripGood.getScan_out_num_of_goods()<tripGood.getNum_of_goods())
 							{
-								Driver d=trip.getDriver();
-								String tokenID=d.getToken();
-								String message="There are lost goods while scanning out!";
-								//send_FCM_Notification(tokenID,message);
+								res.put("Error", "Lost Goods");
+								//change state of goods to lost
+								//notify the Manager
 								tripGood.setState(1);
 								if(tripGoodRepository.save(tripGood)!=null)							
-									res.put("Warring", "Lost Goods");
+									res.put("Success", "The scanning is valid");
 								else
 									res.put("Error", "Connection Error");
 							}
@@ -184,6 +180,8 @@ public class TripGoodRestController {
 									res.put("Success", "The scanning is valid");
 								else
 									res.put("Error", "Connection Error");
+								res.put("Success", "The scanning process is valid");
+
 							}
 							
 						}
@@ -214,7 +212,6 @@ public class TripGoodRestController {
 		}
 		return res;
 	}
-	
 	
 	
 	
