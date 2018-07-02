@@ -359,7 +359,11 @@ public class TruckRestController {
 										}
 										else {		
 											//by assuming they are in the same direction
-											double Time=dist/(truck1Speed-truck2Speed);
+											double Time = dist;
+											if(truck1Speed>truck2Speed)
+												Time/=(truck1Speed-truck2Speed);
+											else
+												Time/=(truck2Speed-truck1Speed);
 											if(Time>1)
 											{
 												Message="there is a driver named "+driver1.getName() +" who you will meet after: "+Time +" hr";
@@ -652,7 +656,7 @@ public class TruckRestController {
 		conn.setRequestMethod("GET");
 		conn.setRequestProperty("Authorization","key="+server_key);
 		conn.setRequestProperty("Content-Type","application/json");
-		String Message="{\"notification\":{\"title\":\"Here is your notification.\",\"body\":\""+message+"\"},\"to\":\""+tokenId+"\"}";
+		String Message="{\"notification\":{\"title\":\"Here is your notification.\",\"sound\":\"default\",\"body\":\""+message+"\"},\"to\":\""+tokenId+"\"}";
 		System.out.println(Message);
 //		JSONObject infoJson = new JSONObject();
 //		infoJson.put("title","Here is your notification.");
