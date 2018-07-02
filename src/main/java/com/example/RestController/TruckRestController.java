@@ -350,7 +350,7 @@ public class TruckRestController {
 									{
 
 										String Key="AIzaSyBrcdEhjh8S2NbfjCKzvUnxpK6PmiCYTfw";
-										String Message="be carefull ya ramaaaaa, you will have an accident soon isA 🙂";
+										String Message="be carefull, you will have an accident soon isA 🙂";
 										if (dist <= 10)
 										{
 											send_FCM_Notification(tokenDriver1,Key,Message);
