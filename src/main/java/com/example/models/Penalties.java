@@ -23,8 +23,7 @@ public class Penalties {
 	@Column(name = "value")
 	private double value;
 	
-	@Column(name = "cause")
-	private double cause;
+	
 	@ManyToOne
 	@JoinColumn(name="trip_id")
 	private Trip trip;
@@ -109,19 +108,6 @@ public class Penalties {
 	public void setLocation(Location location) {
 		this.location = location;
 	}
-
-
-
-	public double getCause() {
-		return cause;
-	}
-
-
-
-	public void setCause(double cause) {
-		this.cause = cause;
-	}
-
 	
 	
 
