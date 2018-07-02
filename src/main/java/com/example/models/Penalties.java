@@ -112,7 +112,6 @@ public class Penalties {
 	}
 
 
-
 	public double getCause() {
 		return cause;
 	}
@@ -126,9 +125,5 @@ public class Penalties {
 	
 
 
-
-	
-
-	
 	
 }
