@@ -14,4 +14,5 @@ public interface TripGoodRepository extends CrudRepository<TripGood, Long>
 	ArrayList<TripGood>  findAllByTrip(Trip trip);
 	ArrayList<TripGood> findAllByGood(Good good);
 	public TripGood findByTripAndGood(Trip trip,Good good);
+	public TripGood findFirstByGoodOrderByDesc(Good good);
 }
