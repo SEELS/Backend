@@ -237,7 +237,7 @@ public class TripGoodRestController {
 		conn.setRequestMethod("GET");
 		conn.setRequestProperty("Authorization","key="+server_key);
 		conn.setRequestProperty("Content-Type","application/json");
-		String Message="{\"notification\":{\"title\":\"Here is your notification.\",\"body\":\""+message+"\"},\"to\":\""+tokenId+"\"}";
+		String Message="{\"notification\":{\"title\":\"Good Count Error.\",\"sound\":\"default\",\"body\":\""+message+"\"},\"to\":\""+tokenId+"\"}";
 		System.out.println(Message);
 //		JSONObject infoJson = new JSONObject();
 //		infoJson.put("title","Here is your notification.");
