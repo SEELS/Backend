@@ -359,16 +359,16 @@ public class TruckRestController {
 										}
 										else {		
 											//by assuming they are in the same direction
-											double Time = dist;
+											double Time = dist/1000;
 											if(truck1Speed>truck2Speed)
 												Time/=(truck1Speed-truck2Speed);
 											else
 												Time/=(truck2Speed-truck1Speed);
 											if(Time>1)
 											{
-												Message="there is a driver named "+driver1.getName() +" who you will meet after: "+Time +" hr";
-												send_FCM_Notification(tokenDriver1,Key,Message);
 												Message="there is a driver named "+driver2.getName() +" who you will meet after: "+Time +" hr";
+												send_FCM_Notification(tokenDriver1,Key,Message);
+												Message="there is a driver named "+driver1.getName() +" who you will meet after: "+Time +" hr";
 												send_FCM_Notification(tokenDriver2,Key,Message);
 												res.put("No possible accident", "They will meet after: "+Time+" hr" );
 											}
@@ -376,9 +376,9 @@ public class TruckRestController {
 											{
 												
 												Time=Time*60;
-												Message="there is a driver named "+driver1.getName() +" who you will meet after: "+Time +" Min";
+												Message="there is a driver named "+driver2.getName() +" who you will meet after: "+Time +" Min";
 												send_FCM_Notification(tokenDriver1,Key,Message);
-												Message="there is a driver named "+driver2.getName() +" who you will meet after: "+Time+ " Min";
+												Message="there is a driver named "+driver1.getName() +" who you will meet after: "+Time+ " Min";
 												send_FCM_Notification(tokenDriver2,Key,Message);
 												res.put("No possible accident", "They will meet after: "+Time+"Min" );
 											}
