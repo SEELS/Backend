@@ -24,7 +24,7 @@ public class Penalties {
 	private double value;
 	
 	@Column(name = "cause")
-	private double cause;
+	private String cause;
 	
 	
 	@ManyToOne
@@ -112,13 +112,13 @@ public class Penalties {
 		this.location = location;
 	}
 	
-	public double getCause() {
+	public String getCause() {
 		return cause;
 	}
 
 
 
-	public void setCause(double cause) {
+	public void setCause(String cause) {
 		this.cause = cause;
 	}
 

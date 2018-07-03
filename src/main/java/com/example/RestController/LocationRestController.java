@@ -275,7 +275,7 @@ public class LocationRestController {
 			p.setTrip(trip);
 			p.setType("speed");
 			p.setValue(penalty);
-			p.setCause(location.getSpeed());
+			p.setCause(location.getSpeed()+"");
 			if (penaltiesRepostitory.save(p) != null) {
 				rate(tripId);
 			}}
@@ -305,7 +305,7 @@ public class LocationRestController {
 				p.setTrip(trip);
 				p.setType("brake");
 				p.setValue(0.2);
-				p.setCause(diffrence);
+				p.setCause(currentSpeed+" "+previousSpeed);
 				if(penaltiesRepostitory.save(p)!=null)
 					rate(tripId);
 			}
