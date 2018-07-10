@@ -379,4 +379,53 @@ public class DriverRestController {
 		
 	}
 
+
+	
+	//Amina
+	@RequestMapping (value="/getAllDriverTrips/{driver_id}",method=RequestMethod.GET)
+	public Map<String,Object> getDriverTrips (@PathVariable long driver_id)
+	{
+		Map<String,Object> res = new HashMap<>();
+		ArrayList<Trip> trips= new ArrayList<Trip>();
+		Driver driver= driverRepository.findOne(driver_id);
+		if(driver==null)
+		{
+			res.put("Error", "No driver with this id");
+		}
+		else 
+		{
+			trips=tripRepository.findByDriverAndDeleted(driver, false);
+			if(trips==null)
+			{
+				res.put("Error", "No trips for that driver");
+			}
+			else
+			{
+				res.put("Success",trips);
+			}
+		}
+		
+		
+		return res;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
+	
+
+
+
