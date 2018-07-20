@@ -18,4 +18,5 @@ public interface LocationRepository extends CrudRepository<Location, Long> {
 	public ArrayList<Location> findByRoadIsNotNull();
 	public ArrayList <Location> findAllByDeleted(boolean deleted);
 	ArrayList<Location> findAllByDriver(Driver driver);
+	public ArrayList<Location> findByTruckOrderByIdDesc(Truck truck);
 }

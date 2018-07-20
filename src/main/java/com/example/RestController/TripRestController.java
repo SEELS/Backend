@@ -226,6 +226,37 @@ public class TripRestController {
 		
 	}
 
+	
+	@RequestMapping(value="/getActuallLocations/truck_id",method=RequestMethod.GET)
+	public Map<String,Object> getActuallLocations (@PathVariable String truck_id)
+	{
+		Map<String,Object> res = new HashMap<>();
+		
+		Truck truck= truckRepository.findOne(truck_id);
+		if(truck==null)
+		{
+			res.put("Error", "no truck with this id");
+		}
+		else 
+		{
+			ArrayList<Location> locations = locationRepository.findByTruckOrderByIdDesc(truck);
+			if(locations == null)
+			{
+				res.put("Error", "no locations for this trip");
+			}
+			else 
+			{
+				res.put("Success", locations);
+			}
+		}
+		
+		
+		
+		
+		return res;
+	}
+	
+	
 	@RequestMapping(value = "/driverTrip/{driverId}", method = RequestMethod.GET)
 	public Map<String, Object> getDriverTrip(@PathVariable long driverId) {
 		Map<String, Object> res = new HashMap<>();
