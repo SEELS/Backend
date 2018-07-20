@@ -303,7 +303,7 @@ public class TruckRestController {
 
 	
 	
-	@Scheduled(fixedRate=3000)
+	@Scheduled(fixedRate=1000)
 	public void meetingPoint()
 	{
 		ArrayList<Truck> trucks = truckRepository.findAllByActive(true);
@@ -355,7 +355,7 @@ public class TruckRestController {
 										{
 											send_FCM_Notification(tokenDriver1,Key,Message);
 											send_FCM_Notification(tokenDriver2,Key,Message);
-											res.put("Possible accident", "They are will have an accident soon"); // Possible accident, distance <= 1km
+											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
 										}
 										else {		
 											//by assuming they are in the same direction

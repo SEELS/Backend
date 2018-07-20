@@ -285,8 +285,8 @@ public class TripGoodRestController {
 	
 	
 	
-	@RequestMapping (value="/getGoodTrips/{trip_id}", method=RequestMethod.GET)
-	public Map<String,Object> getGoodTrips (@PathVariable long trip_id)
+	@RequestMapping (value="/getTripGoods/{trip_id}", method=RequestMethod.GET)
+	public Map<String,Object> getTripGoods (@PathVariable long trip_id)
 	{
 		Map<String,Object> res = new HashMap<>();
 		Trip trip = tripRepository.findOne(trip_id);
