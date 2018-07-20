@@ -341,8 +341,8 @@ public class TruckRestController {
 							{
 								double truck1Speed = truckOneLocation.getSpeed();
 								double truck2Speed = truckTwoLocation.getSpeed();
-								if(truck1Speed!=0.0 && truck2Speed!=0.0)
-								{
+								//if(truck1Speed!=0.0 && truck2Speed!=0.0)
+								//{
 									double dist = getDistance(truckOneLocation, truckTwoLocation);
 									String tokenDriver1=driver1.getToken();
 									String tokenDriver2=driver2.getToken();
@@ -407,11 +407,11 @@ public class TruckRestController {
 									{
 										res.put("Error","there is no Tokens for these drivers :");
 									}
-								}
-								else
-								{
-									res.put("Error","there is no value of speed for these trucks :");
-								}
+								//}
+								//else
+								//{
+								//	res.put("Error","there is no value of speed for these trucks :");
+								//}
 							}
 							else
 							{
