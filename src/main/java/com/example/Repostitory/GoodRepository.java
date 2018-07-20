@@ -7,6 +7,6 @@ import com.example.models.Good;
 
 public interface GoodRepository extends CrudRepository<Good, String>{
 
-
+	
 
 }

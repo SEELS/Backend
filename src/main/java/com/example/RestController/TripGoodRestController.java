@@ -7,6 +7,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -282,6 +283,42 @@ public class TripGoodRestController {
 		return res;
 		}
 	
+	
+	
+	@RequestMapping (value="/getGoodTrips/{trip_id}", method=RequestMethod.GET)
+	public Map<String,Object> getGoodTrips (@PathVariable long trip_id)
+	{
+		Map<String,Object> res = new HashMap<>();
+		Trip trip = tripRepository.findOne(trip_id);
+		if (trip == null)
+		{
+			res.put("Error", "no trip with this id");
+		}
+		else
+		{
+			ArrayList<TripGood> tripGoods = tripGoodRepository.findAllByTrip(trip);
+			if(tripGoods== null)
+			{
+				res.put("Error","no goods for this trip");
+			}
+			else 
+			{
+				ArrayList<Good> goods = new ArrayList<Good>();
+				for (int i=0;i<tripGoods.size();i++)
+				{
+					goods.add(tripGoods.get(i).getGood());
+				}
+				res.put("Success", goods);
+			}
+		}
+		
+		
+		
+		
+		return res;
+		
+		
+	}
 	
 	
 	
