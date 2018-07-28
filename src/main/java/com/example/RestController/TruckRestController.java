@@ -373,12 +373,23 @@ public class TruckRestController {
 										}
 										else 
 										{		
-											//by assuming they are on the opposite direction
+											//by assuming they are on the same direction
 											double Time = dist/1000;
-											if(truck1Speed>truck2Speed)
+											if(truck1Speed!=0 && truck2Speed!=0)
+											{
 												Time/=(truck1Speed+truck2Speed);
-											else
-												Time/=(truck2Speed+truck1Speed);
+											}
+											else if(truck1Speed==0 && truck1Speed!=0)
+											{
+												Time/=truck2Speed;
+											}
+											else if(truck2Speed==0 &&truck2Speed!=0 )
+											{
+												Time/=truck1Speed;
+											}
+											else 
+												Time/=1;
+											
 											if(Time>1)
 											{
 												Message="There is a driver named "+driver2.getName() +" who you will meet after: "+Time +" hr";
