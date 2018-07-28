@@ -348,17 +348,32 @@ public class TruckRestController {
 									String tokenDriver2=driver2.getToken();
 									if(tokenDriver1!=null && tokenDriver2!=null )
 									{
-
+										String Message="";
 										String Key="AIzaSyBrcdEhjh8S2NbfjCKzvUnxpK6PmiCYTfw";
-										String Message="be carefull, you will have an accident soon isA 🙂";
-										if (dist <= 10)
+										if (dist == 10)
 										{
+											Message="Be Careful Avoid Accidents";
 											send_FCM_Notification(tokenDriver1,Key,Message);
 											send_FCM_Notification(tokenDriver2,Key,Message);
 											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
 										}
-										else {		
-											//by assuming they are in the same direction
+										else if (dist == 5)
+										{
+											Message="Be Careful On The Road";
+											send_FCM_Notification(tokenDriver1,Key,Message);
+											send_FCM_Notification(tokenDriver2,Key,Message);
+											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
+										}
+										else if (dist <= 2)
+										{
+											Message="Be Careful With Near Cars";
+											send_FCM_Notification(tokenDriver1,Key,Message);
+											send_FCM_Notification(tokenDriver2,Key,Message);
+											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
+										}
+										else 
+										{		
+											//by assuming they are on the same direction
 											double Time = dist/1000;
 											if(truck1Speed>truck2Speed)
 												Time/=(truck1Speed-truck2Speed);
@@ -366,7 +381,7 @@ public class TruckRestController {
 												Time/=(truck2Speed-truck1Speed);
 											if(Time>1)
 											{
-												Message="there is a driver named "+driver2.getName() +" who you will meet after: "+Time +" hr";
+												Message="There is a driver named "+driver2.getName() +" who you will meet after: "+Time +" hr";
 												send_FCM_Notification(tokenDriver1,Key,Message);
 												Message="there is a driver named "+driver1.getName() +" who you will meet after: "+Time +" hr";
 												send_FCM_Notification(tokenDriver2,Key,Message);
