@@ -303,7 +303,7 @@ public class TruckRestController {
 
 	
 	
-	@Scheduled(fixedRate=60000)
+	@Scheduled(fixedRate=6000)
 	public void meetingPoint()
 	{
 		ArrayList<Truck> trucks = truckRepository.findAllByActive(true);
