@@ -22,12 +22,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.Repostitory.DriverRepository;
 import com.example.Repostitory.LocationRepository;
+import com.example.Repostitory.NotificationRepository;
 import com.example.Repostitory.TripLocationRepository;
 import com.example.Repostitory.TripRepository;
 import com.example.Repostitory.TruckRepository;
 import com.example.models.Truck;
 import com.example.models.Driver;
 import com.example.models.Location;
+import com.example.models.Notification;
 import com.example.models.Trip;
 import com.example.models.TripLocation;
 
@@ -48,6 +50,9 @@ public class TruckRestController {
 
 	@Autowired
 	private TripRepository tripRepository;
+
+	@Autowired
+	private NotificationRepository notificationRepository;
 
 	/*
 	 * it gets all the active trucks, helping to draw markers of all the active
@@ -312,6 +317,7 @@ public class TruckRestController {
 			for(int j = i+1;j<trucks.size();j++)
 			{
 				changeInSpeed(trucks.get(i).getId(), trucks.get(j).getId());
+				
 			}
 		}
 	}
@@ -346,6 +352,9 @@ public class TruckRestController {
 									double dist = getDistance(truckOneLocation, truckTwoLocation);
 									String tokenDriver1=driver1.getToken();
 									String tokenDriver2=driver2.getToken();
+									Trip tripOne=tripRepository.findByTruckAndState(truck1,2);
+									Trip tripTwo=tripRepository.findByTruckAndState(truck2,2);
+									Notification notification=new Notification();
 									if(tokenDriver1!=null && tokenDriver2!=null )
 									{
 										String Message="";
@@ -356,13 +365,28 @@ public class TruckRestController {
 											send_FCM_Notification(tokenDriver1,Key,Message);
 											send_FCM_Notification(tokenDriver2,Key,Message);
 											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
+										    notification.setTrip_id_1(tripOne);
+										    notification.setTrip_id_2(tripTwo);
+										    notification.setContent(Message);
+										    notification.setDeleted(false);
+										    notification.setSeen(false);
+										    notificationRepository.save(notification);
+										    
 										}
+
 										else if (dist == 5)
 										{
 											Message="Be Careful On The Road";
 											send_FCM_Notification(tokenDriver1,Key,Message);
 											send_FCM_Notification(tokenDriver2,Key,Message);
 											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
+											notification.setTrip_id_1(tripOne);
+										    notification.setTrip_id_2(tripTwo);
+										    notification.setContent(Message);
+										    notification.setDeleted(false);
+										    notification.setSeen(false);
+										    notificationRepository.save(notification);
+											
 										}
 										else if (dist <= 2)
 										{
@@ -370,6 +394,12 @@ public class TruckRestController {
 											send_FCM_Notification(tokenDriver1,Key,Message);
 											send_FCM_Notification(tokenDriver2,Key,Message);
 											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
+											notification.setTrip_id_1(tripOne);
+										    notification.setTrip_id_2(tripTwo);
+										    notification.setContent(Message);
+										    notification.setDeleted(false);
+										    notification.setSeen(false);
+										    notificationRepository.save(notification);
 										}
 										else 
 										{		
@@ -724,5 +754,6 @@ public class TruckRestController {
 		}
 		return res;
 		}
+
 	
 }
