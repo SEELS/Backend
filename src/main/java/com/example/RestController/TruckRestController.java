@@ -448,6 +448,15 @@ public class TruckRestController {
 												send_FCM_Notification(tokenDriver2,Key,Message);
 												res.put("No possible accident", "They will meet after: "+Time+"Min" );
 											}
+											Notification notification=new Notification();
+
+			notification.setTrip_id_1(tripOne);
+		    notification.setTrip_id_2(tripTwo);
+		    notification.setContent(Message);
+		    notification.setDeleted(false);
+		    notification.setSeen(false);
+		    notificationRepository.save(notification);
+								
 										}
 										
 										
