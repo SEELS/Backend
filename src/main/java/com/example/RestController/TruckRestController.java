@@ -308,7 +308,7 @@ public class TruckRestController {
 
 	
 	
-	@Scheduled(fixedRate=6000)
+	@Scheduled(fixedRate=60000)
 	public void meetingPoint()
 	{
 		ArrayList<Truck> trucks = truckRepository.findAllByActive(true);
@@ -367,6 +367,11 @@ public class TruckRestController {
 											send_FCM_Notification(tokenDriver2,Key,Message);
 											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
 											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
+											Message="agaaaaaaaain";
+											send_FCM_Notification(tokenDriver1,Key,Message);
+											send_FCM_Notification(tokenDriver2,Key,Message);
+											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
+											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
 										}
 
 										else if (dist == 5)
@@ -376,11 +381,21 @@ public class TruckRestController {
 											send_FCM_Notification(tokenDriver2,Key,Message);
 											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
 											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
+											Message="agaaaaaaaain 222";
+											send_FCM_Notification(tokenDriver1,Key,Message);
+											send_FCM_Notification(tokenDriver2,Key,Message);
+											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
+											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
 											
 										}
 										else if (dist <= 2)
 										{
 											Message="Be Careful With Near Cars";
+											send_FCM_Notification(tokenDriver1,Key,Message);
+											send_FCM_Notification(tokenDriver2,Key,Message);
+											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
+											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
+											Message="agaaaaaaaain 333";
 											send_FCM_Notification(tokenDriver1,Key,Message);
 											send_FCM_Notification(tokenDriver2,Key,Message);
 											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
