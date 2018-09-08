@@ -355,7 +355,6 @@ public class TruckRestController {
 									String tokenDriver2=driver2.getToken();
 									Trip tripOne=tripRepository.findByTruckAndState(truck1,2);
 									Trip tripTwo=tripRepository.findByTruckAndState(truck2,2);
-									Notification notification=new Notification();
 									if(tokenDriver1!=null && tokenDriver2!=null )
 									{
 										String Message="";
@@ -755,8 +754,7 @@ public class TruckRestController {
 		}
 		return res;
 		}
-		@RequestMapping(value = "/saveNotification/{content}/{trip1_id}/{trip2_id}", method = RequestMethod.GET)
-		public Map<String, String> saveNotification(@PathVariable String content,@PathVariable long trip1_id,@PathVariable long trip2_id ) {
+		public Map<String, String> saveNotification( String content, long trip1_id,long trip2_id ) {
 			Map<String, String> res = new HashMap<>();
 			Notification notification=new Notification();
 			Trip tripOne=tripRepository.findOne(trip1_id);
