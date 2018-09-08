@@ -324,6 +324,7 @@ public class TruckRestController {
 	
 	/* modified by Mariam */
 	//modified by Amina
+	@RequestMapping(value = "/changeInSpeed/{truck1_id}/{truck2_id}", method = RequestMethod.GET)
 	public Map<String,Object> changeInSpeed(@PathVariable String truck1_id, @PathVariable String truck2_id) {
 		
 		Map<String, Object> res = new HashMap<>();
