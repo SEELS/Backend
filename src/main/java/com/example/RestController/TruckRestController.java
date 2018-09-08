@@ -366,13 +366,7 @@ public class TruckRestController {
 											send_FCM_Notification(tokenDriver1,Key,Message);
 											send_FCM_Notification(tokenDriver2,Key,Message);
 											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
-										    notification.setTrip_id_1(tripOne);
-										    notification.setTrip_id_2(tripTwo);
-										    notification.setContent(Message);
-										    notification.setDeleted(false);
-										    notification.setSeen(false);
-										    notificationRepository.save(notification);
-										    
+											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
 										}
 
 										else if (dist == 5)
@@ -381,12 +375,7 @@ public class TruckRestController {
 											send_FCM_Notification(tokenDriver1,Key,Message);
 											send_FCM_Notification(tokenDriver2,Key,Message);
 											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
-											notification.setTrip_id_1(tripOne);
-										    notification.setTrip_id_2(tripTwo);
-										    notification.setContent(Message);
-										    notification.setDeleted(false);
-										    notification.setSeen(false);
-										    notificationRepository.save(notification);
+											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
 											
 										}
 										else if (dist <= 2)
@@ -395,20 +384,11 @@ public class TruckRestController {
 											send_FCM_Notification(tokenDriver1,Key,Message);
 											send_FCM_Notification(tokenDriver2,Key,Message);
 											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
-											notification.setTrip_id_1(tripOne);
-										    notification.setTrip_id_2(tripTwo);
-										    notification.setContent(Message);
-										    notification.setDeleted(false);
-										    notification.setSeen(false);
+											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
 										}
 										else 
 										{	
-											notification.setTrip_id_1(tripOne);
-										    notification.setTrip_id_2(tripTwo);
-										    notification.setContent(Message);
-										    notification.setDeleted(false);
-										    notification.setSeen(false);
-										    notificationRepository.save(notification);
+											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
 											//by assuming they are on the same direction
 											double Time = dist/1000;
 											if(truck1Speed!=0 && truck2Speed!=0)
@@ -760,6 +740,26 @@ public class TruckRestController {
 		}
 		return res;
 		}
-
+		@RequestMapping(value = "/saveNotification/{content}/{trip1_id}/{trip2_id}", method = RequestMethod.GET)
+		public Map<String, String> saveNotification(@PathVariable String content,@PathVariable long trip1_id,@PathVariable long trip2_id ) {
+			Map<String, String> res = new HashMap<>();
+			Notification notification=new Notification();
+			Trip tripOne=tripRepository.findOne(trip1_id);
+			Trip tripTwo=tripRepository.findOne(trip2_id);
+			notification.setTrip_id_1(tripOne);
+		    notification.setTrip_id_2(tripTwo);
+		    notification.setContent(content);
+		    notification.setDeleted(false);
+		    notification.setSeen(false);
+		    if(notificationRepository.save(notification)!=null)
+		    {
+		    	res.put("Sccuess", "Done");
+		    }
+		    else
+		    {
+		    	res.put("Error", "Connection Error");
+		    }
+		    return res;
+		}
 	
 }
