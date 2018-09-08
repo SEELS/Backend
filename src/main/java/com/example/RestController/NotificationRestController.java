@@ -65,7 +65,7 @@ public class NotificationRestController {
 				break;
 			}
 			else
-			{3
+			{
 				notify.setSeen(true);
 				if(notificationRepository.save(notify)==null)
 				{
