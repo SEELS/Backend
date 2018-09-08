@@ -366,7 +366,7 @@ public class TruckRestController {
 
 			notification.setTrip_id_1(tripOne);
 		    notification.setTrip_id_2(tripTwo);
-		    notification.setContent(content);
+		    notification.setContent(Message);
 		    notification.setDeleted(false);
 		    notification.setSeen(false);
 		    notificationRepository.save(notification);
@@ -383,7 +383,7 @@ public class TruckRestController {
 
 			notification.setTrip_id_1(tripOne);
 		    notification.setTrip_id_2(tripTwo);
-		    notification.setContent(content);
+		    notification.setContent(Message);
 		    notification.setDeleted(false);
 		    notification.setSeen(false);
 		    notificationRepository.save(notification);
@@ -401,7 +401,7 @@ public class TruckRestController {
 
 			notification.setTrip_id_1(tripOne);
 		    notification.setTrip_id_2(tripTwo);
-		    notification.setContent(content);
+		    notification.setContent(Message);
 		    notification.setDeleted(false);
 		    notification.setSeen(false);
 		    notificationRepository.save(notification);
