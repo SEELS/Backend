@@ -402,7 +402,13 @@ public class TruckRestController {
 										    notificationRepository.save(notification);
 										}
 										else 
-										{		
+										{	
+											notification.setTrip_id_1(tripOne);
+										    notification.setTrip_id_2(tripTwo);
+										    notification.setContent(Message);
+										    notification.setDeleted(false);
+										    notification.setSeen(false);
+										    notificationRepository.save(notification);
 											//by assuming they are on the same direction
 											double Time = dist/1000;
 											if(truck1Speed!=0 && truck2Speed!=0)
