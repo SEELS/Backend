@@ -402,7 +402,6 @@ public class TruckRestController {
 										}
 										else 
 										{	
-											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
 											//by assuming they are on the same direction
 											double Time = dist/1000;
 											if(truck1Speed!=0 && truck2Speed!=0)
