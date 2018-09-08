@@ -36,6 +36,21 @@ public class NotificationRestController {
 		return res;
 	}
 	
+	@RequestMapping(value = "/getNotification", method = RequestMethod.GET)
+	public Map<String,Object> getNotification() {
+		Map<String, Object> res = new HashMap<>();
+		ArrayList<Notification> getNotification=(ArrayList<Notification>) notificationRepository.findAll();
+		if(getNotification.size()==0)
+		{
+			res.put("Success", "Empty, all messages are seen!");
+		}
+		else{
+			res.put("Success",getNotification);
+
+		}
+		return res;
+	
+	}
 	@RequestMapping(value = "/changeNotificationState/{ids}", method = RequestMethod.GET)
 	public Map<String,Object> changeNotificationState(@PathVariable String ids) {
 		boolean flag=true;
@@ -50,7 +65,7 @@ public class NotificationRestController {
 				break;
 			}
 			else
-			{
+			{3
 				notify.setSeen(true);
 				if(notificationRepository.save(notify)==null)
 				{
