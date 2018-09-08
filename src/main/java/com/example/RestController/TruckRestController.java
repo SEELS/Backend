@@ -399,7 +399,6 @@ public class TruckRestController {
 										    notification.setContent(Message);
 										    notification.setDeleted(false);
 										    notification.setSeen(false);
-										    notificationRepository.save(notification);
 										}
 										else 
 										{	
