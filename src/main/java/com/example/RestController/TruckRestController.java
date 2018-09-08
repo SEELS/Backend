@@ -362,43 +362,34 @@ public class TruckRestController {
 										if (dist == 10)
 										{
 											Message="Be Careful Avoid Accidents";
+											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
+
 											send_FCM_Notification(tokenDriver1,Key,Message);
 											send_FCM_Notification(tokenDriver2,Key,Message);
 											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
-											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
-											Message="agaaaaaaaain";
-											send_FCM_Notification(tokenDriver1,Key,Message);
-											send_FCM_Notification(tokenDriver2,Key,Message);
-											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
-											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
+											
 										}
 
 										else if (dist == 5)
 										{
 											Message="Be Careful On The Road";
+											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
 											send_FCM_Notification(tokenDriver1,Key,Message);
 											send_FCM_Notification(tokenDriver2,Key,Message);
 											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
-											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
-											Message="agaaaaaaaain 222";
-											send_FCM_Notification(tokenDriver1,Key,Message);
-											send_FCM_Notification(tokenDriver2,Key,Message);
-											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
-											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
+											
+											
 											
 										}
 										else if (dist <= 2)
 										{
 											Message="Be Careful With Near Cars";
+											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
 											send_FCM_Notification(tokenDriver1,Key,Message);
 											send_FCM_Notification(tokenDriver2,Key,Message);
 											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
-											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
-											Message="agaaaaaaaain 333";
-											send_FCM_Notification(tokenDriver1,Key,Message);
-											send_FCM_Notification(tokenDriver2,Key,Message);
-											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
-											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
+											
+											
 										}
 										else 
 										{	
