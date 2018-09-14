@@ -308,7 +308,7 @@ public class TruckRestController {
 
 	
 	
-	@Scheduled(fixedRate=60000)
+	@Scheduled(fixedRate=6000)
 	public void meetingPoint()
 	{
 		ArrayList<Truck> trucks = truckRepository.findAllByActive(true);
@@ -355,64 +355,58 @@ public class TruckRestController {
 									String tokenDriver2=driver2.getToken();
 									Trip tripOne=tripRepository.findByTruckAndState(truck1,2);
 									Trip tripTwo=tripRepository.findByTruckAndState(truck2,2);
-									if(tokenDriver1!=null && tokenDriver2!=null )
+									if(tripOne==null || tripTwo==null)
+									{
+										res.put("Error","Here is the error");
+									}
+									else if(tokenDriver1!=null && tokenDriver2!=null )
 									{
 										String Message="";
 										String Key="AIzaSyBrcdEhjh8S2NbfjCKzvUnxpK6PmiCYTfw";
-										if (dist == 10)
-										{
-											Message="Be Careful Avoid Accidents";
-											Notification notification=new Notification();
-
-			notification.setTrip_id_1(tripOne);
-		    notification.setTrip_id_2(tripTwo);
-		    notification.setContent(Message);
-		    notification.setDeleted(false);
-		    notification.setSeen(false);
-		    notificationRepository.save(notification);
-											send_FCM_Notification(tokenDriver1,Key,Message);
-											send_FCM_Notification(tokenDriver2,Key,Message);
-											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
-											
-										}
-
-										else if (dist == 5)
-										{
-											Message="Be Careful On The Road";
-											Notification notification=new Notification();
-
-			notification.setTrip_id_1(tripOne);
-		    notification.setTrip_id_2(tripTwo);
-		    notification.setContent(Message);
-		    notification.setDeleted(false);
-		    notification.setSeen(false);
-		    notificationRepository.save(notification);
-											send_FCM_Notification(tokenDriver1,Key,Message);
-											send_FCM_Notification(tokenDriver2,Key,Message);
-											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
-											
-											
-											
-										}
-										else if (dist <= 2)
-										{
-											Message="Be Careful With Near Cars";
-											Notification notification=new Notification();
-
-			notification.setTrip_id_1(tripOne);
-		    notification.setTrip_id_2(tripTwo);
-		    notification.setContent(Message);
-		    notification.setDeleted(false);
-		    notification.setSeen(false);
-		    notificationRepository.save(notification);
-											send_FCM_Notification(tokenDriver1,Key,Message);
-											send_FCM_Notification(tokenDriver2,Key,Message);
-											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
-											
-											
-										}
-										else 
-										{	
+//										if (dist == 10)
+//										{
+//											Message="Be Careful Avoid Accidents";
+//											send_FCM_Notification(tokenDriver1,Key,Message);
+//											send_FCM_Notification(tokenDriver2,Key,Message);
+//											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
+//											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
+//											Message="agaaaaaaaain";
+//											send_FCM_Notification(tokenDriver1,Key,Message);
+//											send_FCM_Notification(tokenDriver2,Key,Message);
+//											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
+//											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
+//										}
+//
+//										else if (dist == 5)
+//										{
+//											Message="Be Careful On The Road";
+//											send_FCM_Notification(tokenDriver1,Key,Message);
+//											send_FCM_Notification(tokenDriver2,Key,Message);
+//											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
+//											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
+//											Message="agaaaaaaaain 222";
+//											send_FCM_Notification(tokenDriver1,Key,Message);
+//											send_FCM_Notification(tokenDriver2,Key,Message);
+//											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
+//											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
+//											
+//										}
+//										else if (dist <= 2)
+//										{
+//											Message="Be Careful With Near Cars";
+//											send_FCM_Notification(tokenDriver1,Key,Message);
+//											send_FCM_Notification(tokenDriver2,Key,Message);
+//											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
+//											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
+//											Message="agaaaaaaaain 333";
+//											send_FCM_Notification(tokenDriver1,Key,Message);
+//											send_FCM_Notification(tokenDriver2,Key,Message);
+//											res.put("Possible accident", "They will have an accident soon"); // Possible accident, distance <= 1km
+//											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
+//										}
+//										else 
+//										{	
+											saveNotification(Message,tripOne.getTrip_id(), tripTwo.getTrip_id());
 											//by assuming they are on the same direction
 											double Time = dist/1000;
 											if(truck1Speed!=0 && truck2Speed!=0)
@@ -449,15 +443,20 @@ public class TruckRestController {
 												res.put("No possible accident", "They will meet after: "+Time+"Min" );
 											}
 											Notification notification=new Notification();
-
-			notification.setTrip_id_1(tripOne);
-		    notification.setTrip_id_2(tripTwo);
-		    notification.setContent(Message);
-		    notification.setDeleted(false);
-		    notification.setSeen(false);
-		    notificationRepository.save(notification);
-								
-										}
+											notification.setTrip_id_1(tripOne);
+										    notification.setTrip_id_2(tripTwo);
+										    notification.setContent(Message);
+										    notification.setDeleted(false);
+										    notification.setSeen(false);
+										    if(notificationRepository.save(notification)!=null)
+										    {
+										    	res.put("Sccuess", "Done");
+										    }
+										    else
+										    {
+										    	res.put("Error", "Connection Error");
+										    }
+//										}
 										
 										
 //										else {
