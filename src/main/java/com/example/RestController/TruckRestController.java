@@ -413,7 +413,7 @@ public class TruckRestController {
 											{
 												Time/=(truck1Speed+truck2Speed);
 											}
-											else if(truck1Speed==0 && truck1Speed!=0)
+											else if(truck1Speed==0 && truck2Speed!=0)
 											{
 												Time/=truck2Speed;
 											}
